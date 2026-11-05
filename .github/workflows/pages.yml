@@ -1,0 +1,52 @@
+# Publica a VERSÃO DE DEMONSTRAÇÃO no GitHub Pages a cada push na main.
+# Pré-requisito (uma vez): Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Demonstração no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: Build de demonstração (API simulada no navegador, base /SCM/)
+        run: npx ng build --configuration demo
+      - name: Fallback de rotas do Angular e desativação do Jekyll
+        run: |
+          cp dist/frontend/browser/index.html dist/frontend/browser/404.html
+          touch dist/frontend/browser/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: frontend/dist/frontend/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

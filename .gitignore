@@ -1,0 +1,13 @@
+# Repositório público de DEMONSTRAÇÃO: publica apenas o necessário para o GitHub Pages.
+# Back-end, documentação interna e materiais do cliente ficam fora (lista de permissão).
+/*
+!/.gitignore
+!/README.md
+!/.github/
+!/frontend/
+
+# artefatos do front-end
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.angular/
+/frontend/.vscode/
