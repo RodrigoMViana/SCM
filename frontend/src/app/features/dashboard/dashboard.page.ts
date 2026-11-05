@@ -16,7 +16,7 @@ import { BarrasComponent } from '../../shared/ui';
     <div class="pagina">
       <div class="pagina-cabecalho">
         <div><h1>Dashboard</h1><div class="subtitulo">Acompanhamento das malhas fiscais e resultados da recuperação.</div></div>
-        <nz-select [(ngModel)]="malhaId" (ngModelChange)="carregar()" nzPlaceHolder="Todas as malhas" nzAllowClear style="min-width: 280px">
+        <nz-select [(ngModel)]="malhaId" (ngModelChange)="carregar()" nzPlaceHolder="Todas as malhas" nzAllowClear style="width: 280px; max-width: 100%">
           @for (o of opcoesMalha(); track o.id) { <nz-option [nzValue]="o.id" [nzLabel]="o.rotulo" /> }
         </nz-select>
       </div>

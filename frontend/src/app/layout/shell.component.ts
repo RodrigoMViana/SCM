@@ -51,7 +51,7 @@ import { MenuService } from '../core/menu.service';
           @if (auth.perfis().length > 1) {
             <div class="perfil">
               <span class="suave">Perfil</span>
-              <nz-select [ngModel]="auth.perfilAtivo()" (ngModelChange)="trocar($event)" style="min-width: 220px">
+              <nz-select class="seletor-perfil" [ngModel]="auth.perfilAtivo()" (ngModelChange)="trocar($event)">
                 @for (p of auth.perfis(); track p.codigo) { <nz-option [nzValue]="p.codigo" [nzLabel]="p.nome" /> }
               </nz-select>
             </div>
@@ -62,7 +62,7 @@ import { MenuService } from '../core/menu.service';
             <nz-avatar [nzText]="iniciais()" style="background: var(--mf-primaria); color: #fff" />
             <span>{{ auth.sessao()?.nome }}</span>
           </div>
-          <button nz-button nzType="text" (click)="auth.sair()"><nz-icon nzType="logout" />Sair</button>
+          <button nz-button nzType="text" (click)="auth.sair()" aria-label="Sair"><nz-icon nzType="logout" /><span class="rotulo-sair">Sair</span></button>
         </header>
         <main>
           <router-outlet />
@@ -91,11 +91,15 @@ import { MenuService } from '../core/menu.service';
     .topo { height: 64px; background: #fff; border-bottom: 1px solid var(--mf-borda); display: flex; align-items: center; gap: 16px; padding: 0 16px; position: sticky; top: 0; z-index: 10; }
     .espaco { flex: 1; }
     .selo-demo { font-size: 12px; font-weight: 500; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 2px 10px; }
-    .perfil { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .perfil { display: flex; align-items: center; gap: 8px; font-size: 13px; min-width: 0; }
+    .seletor-perfil { width: 220px; }
     .perfil-unico { font-size: 13px; font-weight: 500; color: var(--mf-primaria); }
     .usuario { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; }
     main { min-width: 0; }
-    @media (max-width: 900px) { .shell { grid-template-columns: 64px 1fr; } .marca-texto, .rotulo, .rodape-lateral, .selo-demo { display: none; } .usuario span { display: none; } }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 64px 1fr; } .marca-texto, .rotulo, .rodape-lateral, .selo-demo, .rotulo-sair, .perfil > .suave { display: none; }
+      .usuario > span { display: none; } .topo { gap: 6px; padding: 0 8px; } .seletor-perfil { width: 150px; }
+    }
   `,
 })
 export class ShellComponent implements OnInit, OnDestroy {

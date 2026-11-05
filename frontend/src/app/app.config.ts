@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideNzConfig } from 'ng-zorro-antd/core/config';
+import { provideNzNativeDateAdapter } from 'ng-zorro-antd/core/time';
 import { provideNzI18n, pt_BR } from 'ng-zorro-antd/i18n';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
     // na versão de demonstração (GitHub Pages) a API é simulada no navegador
     provideHttpClient(withInterceptors(AMBIENTE.demonstracao ? [httpInterceptor, demoInterceptor] : [httpInterceptor])),
     provideNzI18n(pt_BR),
+    provideNzNativeDateAdapter({ locale: 'pt-BR', firstDayOfWeek: 0 }),
     provideNzIcons(ICONES),
     NzModalService,
     provideNzConfig({
